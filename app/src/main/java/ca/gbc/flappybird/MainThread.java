@@ -25,9 +25,10 @@ public class MainThread extends Thread {
             canvas = null;
             try {
                 canvas = mySurfaceHolder.lockCanvas();
-                // Wrapping in synchronized tab so that specific method is called
+                // Wrapping in synchronized tab so that specific method is called as we want
                 synchronized (mySurfaceHolder) {
                     AppHolder.getGameManager().backgroundAnimation(canvas);
+                    AppHolder.getGameManager().birdAnimation(canvas);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
