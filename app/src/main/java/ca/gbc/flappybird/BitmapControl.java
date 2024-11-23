@@ -7,15 +7,41 @@ import android.graphics.BitmapFactory;
 public class BitmapControl {
     Bitmap background;
     Bitmap[] FlyingBird; // Initalizing Array for the flying birds
+    Bitmap upTube;
+    Bitmap downTube;
 
     public BitmapControl(Resources res) {
         background = BitmapFactory.decodeResource(res, R.drawable.background);
         background = imageScale(background);
         FlyingBird = new Bitmap[3];
+
         // Accesing all the birds through Bitmap
         FlyingBird[0] = BitmapFactory.decodeResource(res, R.drawable.bird1);
         FlyingBird[1] = BitmapFactory.decodeResource(res, R.drawable.bird2);
         FlyingBird[2] = BitmapFactory.decodeResource(res, R.drawable.bird3);
+
+        // Accessing all the up and down tube through Bitmap
+        upTube = BitmapFactory.decodeResource(res,R.drawable.up_tube);
+        downTube = BitmapFactory.decodeResource(res,R.drawable.down_tube);
+
+    }
+
+    // Returning the values of up and down tube
+    public Bitmap getUpTube(){
+        return upTube;
+    }
+
+    public Bitmap getDownTube(){
+        return downTube;
+    }
+
+    // Getting the height and width of tubes
+    public int getTubeWidth(){
+        return upTube.getWidth();
+    }
+
+    public int getTubeHeight(){
+        return upTube.getHeight();
     }
 
     // Get Method for FlyingBird

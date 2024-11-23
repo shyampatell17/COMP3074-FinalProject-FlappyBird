@@ -29,6 +29,7 @@ public class MainThread extends Thread {
                 synchronized (mySurfaceHolder) {
                     AppHolder.getGameManager().backgroundAnimation(canvas);
                     AppHolder.getGameManager().birdAnimation(canvas);
+                    AppHolder.getGameManager().scrollingTube(canvas);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
