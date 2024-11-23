@@ -1,6 +1,8 @@
 package ca.gbc.flappybird;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +17,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        AppHolder.assign(this.getApplicationContext());
     }
+
+    // Method to start the game when clicked on button "startGame"
+    public void startGame(View view){
+        Intent intent = new Intent(this, GameActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
 }
