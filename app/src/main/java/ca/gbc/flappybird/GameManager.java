@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,6 +30,21 @@ public class GameManager {
       gameState == 1 : the game is running
       gameState == 2 : The game is over
    */
+
+    public void checkGameOver() {
+        // Check if bird touches the ground
+        if (bird.getY() + AppHolder.getBitmapControl().getBirdHeight() >= AppHolder.SCRN_HEIGHT_Y) {
+            Log.d("GameOver", "Bird hit the ground. Triggering Game Over.");
+            gameState = 2; // Game over
+        }
+
+        // Optional: Check if the bird moves above the screen (if needed)
+        if (bird.getY() <= 0) {
+            Log.d("GameOver", "Bird hit the ground. Triggering Game Over.");
+            gameState = 2; // Game over
+        }
+    }
+
 
     public void generateTubeObject(){
         for (int j = 0; j< AppHolder.tube_numbers; j++){
@@ -67,8 +83,11 @@ public class GameManager {
                 bird.setVelocity(bird.getVelocity() + AppHolder.gravityPull);
                 bird.setY(bird.getY() + bird.getVelocity());
             }
+            // Check for Game Over condition
+            checkGameOver();
         }
         int currentFrame = bird.getCurrentFrame();
+        Log.d("Bird", "Bird Y: " + bird.getY() + ", Velocity: " + bird.getVelocity());
         canvas.drawBitmap(AppHolder.getBitmapControl().getBird(currentFrame), bird.getX(), bird.getY(), null);
         currentFrame++;
         if(currentFrame > bird.maximumFrame){

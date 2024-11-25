@@ -18,6 +18,12 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         AppHolder.assign(this.getApplicationContext());
+
+        // Initialize the About button's click listener
+        findViewById(R.id.btnAbout).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
+        });
     }
 
     // Method to start the game when clicked on button "startGame"
@@ -26,5 +32,4 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
 }

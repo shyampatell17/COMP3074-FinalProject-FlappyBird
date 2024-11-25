@@ -45,7 +45,7 @@
         android:layout_below="@+id/imageButton"
         android:background="@drawable/btn_gradient_style"
         android:text="RATE"
-        android:textSize="50sp"
+        android:textSize="40sp"
         android:fontFamily="@font/fonta"
         android:textColor="@color/myColor"
         android:layout_centerHorizontal="true"
@@ -63,6 +63,19 @@
         android:textColor="@color/colorRed"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btnAbout"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exitBtn"
+        android:background="@drawable/btn_gradient_style"
+        android:text="About"
+        android:textSize="30sp"
+        android:fontFamily="@font/fonta"
+        android:textColor="@color/colorWhite"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
 
 

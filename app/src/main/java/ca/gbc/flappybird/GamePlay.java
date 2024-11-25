@@ -1,6 +1,9 @@
 package ca.gbc.flappybird;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -20,8 +23,10 @@ public class GamePlay extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        mainThread.setIsRunning(true);
-        mainThread.start();
+        if (!mainThread.isAlive()) { // Start the thread only if it's not already running
+            mainThread.setIsRunning(true);
+            mainThread.start();
+        }
     }
 
 
@@ -49,4 +54,26 @@ public class GamePlay extends SurfaceView implements SurfaceHolder.Callback {
         AppHolder.getGameManager().bird.setVelocity(AppHolder.JUMP_VELOCITY);
         return true;
     }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        // Draw background and bird animations
+        AppHolder.getGameManager().backgroundAnimation(canvas);
+        AppHolder.getGameManager().birdAnimation(canvas);
+
+        // Continuously check for Game Over condition
+        if (AppHolder.getGameManager().gameState == 2) {
+            // Navigate to GameOver activity
+            Intent gameOverIntent = new Intent(getContext(), GameOver.class);
+            getContext().startActivity(gameOverIntent);
+
+            // End the game thread
+            mainThread.setIsRunning(false);
+            ((Activity) getContext()).finish(); // Ensure current activity is finished
+        }
+    }
+
+
 }
