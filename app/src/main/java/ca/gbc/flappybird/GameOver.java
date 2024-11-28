@@ -20,6 +20,8 @@ public class GameOver extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game_over);
 
+        Button mRestartButton;
+
         // Rating the game feature, getting executed
         RatingBar ratingBar = findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
@@ -31,10 +33,11 @@ public class GameOver extends AppCompatActivity {
         });
 
         // Restart the game button
-        Button restartButton = findViewById(R.id.btnRestart);
-        restartButton.setOnClickListener(v -> {
-            Intent restartIntent = new Intent(GameOver.this, GameActivity.class);
-            startActivity(restartIntent);
+        mRestartButton = findViewById(R.id.btnRestart);
+
+        mRestartButton.setOnClickListener(v -> {
+            Intent myIntent = new Intent(GameOver.this, MainActivity.class);
+            startActivity(myIntent);
             finish();
         });
 
