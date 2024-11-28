@@ -20,6 +20,7 @@ public class GameOver extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game_over);
 
+        // Rating the game feature, getting executed
         RatingBar ratingBar = findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
             // Save the rating locally
@@ -29,6 +30,7 @@ public class GameOver extends AppCompatActivity {
             editor.apply();
         });
 
+        // Restart the game button
         Button restartButton = findViewById(R.id.btnRestart);
         restartButton.setOnClickListener(v -> {
             Intent restartIntent = new Intent(GameOver.this, GameActivity.class);
@@ -36,6 +38,7 @@ public class GameOver extends AppCompatActivity {
             finish();
         });
 
+        // Sharing your progress on Social Media
         findViewById(R.id.btnShare).setOnClickListener(v -> {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");

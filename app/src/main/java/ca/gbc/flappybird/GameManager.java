@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ public class GameManager {
     static int gameState;
     ArrayList<TubeCollection> tubeCollections;
     Random rand;
+    int scoreCount;  // This will be used to store the score
+    int winningTube;  // This will used to determine the winning tube obstacle
+    Paint designPaint;
     public GameManager() {
         bgImage = new BgImage();
         bird = new FlyingBird();
@@ -22,28 +27,25 @@ public class GameManager {
         tubeCollections = new ArrayList<>();
         rand = new Random();
         generateTubeObject();
+        initScoreVariables();
     }
 
+    public void initScoreVariables(){
+        scoreCount = 0;
+        winningTube = 0;
+        designPaint = new Paint();
+        designPaint.setColor(Color.YELLOW);
+        designPaint.setTextSize(250);
+        designPaint.setStyle(Paint.Style.FILL);
+        designPaint.setFakeBoldText(true);
+        designPaint.setShadowLayer(5.0f,20.0f,20.0f, Color.BLACK);
+    }
 
     /*
       gameState == 0 : not running(rest)
       gameState == 1 : the game is running
       gameState == 2 : The game is over
    */
-
-    public void checkGameOver() {
-        // Check if bird touches the ground
-        if (bird.getY() + AppHolder.getBitmapControl().getBirdHeight() >= AppHolder.SCRN_HEIGHT_Y) {
-            Log.d("GameOver", "Bird hit the ground. Triggering Game Over.");
-            gameState = 2; // Game over
-        }
-
-        // Optional: Check if the bird moves above the screen (if needed)
-        if (bird.getY() <= 0) {
-            Log.d("GameOver", "Bird hit the ground. Triggering Game Over.");
-            gameState = 2; // Game over
-        }
-    }
 
 
     public void generateTubeObject(){
@@ -58,6 +60,14 @@ public class GameManager {
 
     public void scrollingTube(Canvas can) {
         if (gameState == 1) {
+            if(tubeCollections.get(winningTube).getXtube() < bird.getX() - AppHolder.getBitmapControl().getTubeWidth()){
+                scoreCount++;
+                winningTube++;
+                if(winningTube > AppHolder.tube_numbers - 1){
+                    winningTube =  0;
+                }
+            }
+
             for (int j = 0; j < AppHolder.tube_numbers; j++) {
                 if (tubeCollections.get(j).getXtube() < -AppHolder.getBitmapControl().getTubeWidth()) {
                     tubeCollections.get(j).setXtube(tubeCollections.get(j).getXtube()
@@ -70,6 +80,7 @@ public class GameManager {
                 can.drawBitmap(AppHolder.getBitmapControl().getUpTube(), tubeCollections.get(j).getXtube(), tubeCollections.get(j).getUpTube_Y(), null);
                 can.drawBitmap(AppHolder.getBitmapControl().getDownTube(), tubeCollections.get(j).getXtube(), tubeCollections.get(j).getDownTube_Y(), null);
             }
+            can.drawText(""+ scoreCount, 620,400,designPaint);
         }
     }
 
@@ -84,7 +95,6 @@ public class GameManager {
                 bird.setY(bird.getY() + bird.getVelocity());
             }
             // Check for Game Over condition
-            checkGameOver();
         }
         int currentFrame = bird.getCurrentFrame();
         Log.d("Bird", "Bird Y: " + bird.getY() + ", Velocity: " + bird.getVelocity());
