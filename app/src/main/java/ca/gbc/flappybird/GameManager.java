@@ -60,6 +60,20 @@ public class GameManager {
 
     public void scrollingTube(Canvas can) {
         if (gameState == 1) {
+
+            if ((tubeCollections.get(winningTube).getXtube() < bird.getX() + AppHolder.getBitmapControl().getBirdWidth())
+                    &&(tubeCollections.get(winningTube).getUpTubeCollection_Y() > bird.getY()
+                    ||tubeCollections.get(winningTube).getDownTube_Y() < (bird.getY() +
+                    AppHolder.getBitmapControl().getBirdHeight()))){
+                gameState = 2;
+                Context mContext = AppHolder.gameActivityContext;
+                Intent mIntent = new Intent(mContext,GameOver.class);
+                mIntent.putExtra("score",scoreCount);
+                mContext.startActivity(mIntent);
+                ((Activity)mContext).finish();
+            }
+
+
             if(tubeCollections.get(winningTube).getXtube() < bird.getX() - AppHolder.getBitmapControl().getTubeWidth()){
                 scoreCount++;
                 winningTube++;
